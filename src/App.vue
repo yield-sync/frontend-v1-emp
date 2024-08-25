@@ -1,28 +1,29 @@
 <template>
 	<div class="app-container">
-		<NavigationBar />
+		<NavigationBar/>
 
-		<RouterView />
+		<RouterView/>
 
-		<FooterBar />
+		<FooterBar/>
 	</div>
 </template>
 
 <script setup>
-	import { onMounted } from 'vue';
-	import { RouterView } from 'vue-router';
+	import { onMounted } from "vue";
+	import { RouterView } from "vue-router";
 
 	import FooterBar from "@/components/FooterBar.vue";
 	import NavigationBar from "@/components/NavigationBar.vue";
-	import { useWeb3Store } from '@/stores/web3';
+	import { useWeb3Store } from "@/stores/web3";
 
 
 	const web3Store = useWeb3Store();
 
-	onMounted(() => {
-		console.log('Component mounted!');
+	onMounted(() => 
+	{
+		console.log("Component mounted!");
 
-		web3Store.connectWallet()
+		web3Store.connectWallet();
 	});
 </script>
 

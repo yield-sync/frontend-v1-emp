@@ -4,11 +4,11 @@
 			<VRow>
 				<VCol cols="12" lg="8">
 					<RouterLink to="/">
-						<VBtn variant=plain color="primary">Home</VBtn>
+						<VBtn variant="plain" color="primary">Home</VBtn>
 					</RouterLink>
 
 					<RouterLink to="/about">
-						<VBtn variant=plain color="primary">About</VBtn>
+						<VBtn variant="plain" color="primary">About</VBtn>
 					</RouterLink>
 				</VCol>
 
@@ -18,17 +18,23 @@
 						variant="tonal"
 						color="white"
 						class="w-100 rounded-pill"
-					>Connect Wallet</VBtn>
+					>
+						Connect Wallet
+					</VBtn>
 
 					<VBtn
 						v-else @click="web3Store.disconnectWallet"
 						variant="tonal"
 						color="white"
 						class="w-100 rounded-pill"
-					>Disconnect</VBtn>
+					>
+						Disconnect
+					</VBtn>
+
 					<p v-if="web3Store.error">{{ web3Store.error }}</p>
 				</VCol>
 			</VRow>
+
 			<VRow>
 				<VCol cols="12">
 					<p>
@@ -42,9 +48,9 @@
 </template>
 
 <script setup>
-	import { RouterLink } from 'vue-router';
+	import { RouterLink } from "vue-router";
 
-	import { useWeb3Store } from '@/stores/web3';
+	import { useWeb3Store } from "@/stores/web3";
 
 
 	const web3Store = useWeb3Store();

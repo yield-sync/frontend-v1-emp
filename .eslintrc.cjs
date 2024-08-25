@@ -119,7 +119,9 @@ module.exports = {
 		],
 		"vue/array-bracket-newline": [
 			"warn",
-			{ "minItems": 1 },
+			{
+				"minItems": 1 
+			},
 			
 		],
 		"vue/array-bracket-spacing": [
@@ -174,7 +176,7 @@ module.exports = {
 				"startTag": "never",
 				"endTag": "never",
 				"selfClosingTag": "never"
-			}
+			},
 		],
 		"vue/html-indent": [
 			"warn",
@@ -283,7 +285,7 @@ module.exports = {
 					"prev": "*",
 					"next": "*" 
 				},
-			]
+			],
 		],
 		"vue/padding-lines-in-component-definition": [
 			"warn",
@@ -310,7 +312,7 @@ module.exports = {
 		],
 		"vue/this-in-template": [
 			"error",
-			"always"
+			"never",
 		],
 		"vue/v-for-delimiter-style": [
 			"warn",
@@ -321,7 +323,7 @@ module.exports = {
 			"always",
 		],
 		"@typescript-eslint/ban-types": [
-			"warn"
+			"warn",
 		],
 		"@typescript-eslint/no-inferrable-types": "off",
 		"@typescript-eslint/no-empty-function": [
