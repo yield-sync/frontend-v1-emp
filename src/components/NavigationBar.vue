@@ -14,7 +14,8 @@
 
 				<VCol cols="12" lg="4">
 					<VBtn
-						v-if="!web3Store.isConnected" @click="web3Store.connectWallet"
+						v-if="!web3Store.isConnected"
+						@click="web3Store.connectWallet"
 						variant="tonal"
 						color="white"
 						class="w-100 rounded-pill"
@@ -23,7 +24,8 @@
 					</VBtn>
 
 					<VBtn
-						v-else @click="web3Store.disconnectWallet"
+						v-else
+						click="web3Store.disconnectWallet"
 						variant="tonal"
 						color="white"
 						class="w-100 rounded-pill"
