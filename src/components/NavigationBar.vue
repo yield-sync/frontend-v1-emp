@@ -2,15 +2,7 @@
 	<VSheet color="transparent">
 		<VContainer>
 			<VRow>
-				<VCol cols="12" lg="8">
-					<RouterLink to="/">
-						<VBtn variant="plain" color="primary">Home</VBtn>
-					</RouterLink>
-
-					<RouterLink to="/about">
-						<VBtn variant="plain" color="primary">About</VBtn>
-					</RouterLink>
-				</VCol>
+				<VCol cols="12" lg="8" />
 
 				<VCol cols="12" lg="4">
 					<VBtn
@@ -38,10 +30,19 @@
 			</VRow>
 
 			<VRow>
-				<VCol cols="12">
-					<p>
-						Wallet Connected: {{ web3Store.shortAccount }}<br/>
-						Network ID: {{ web3Store.networkId }}
+				<VCol cols="12" lg="8">
+					<RouterLink to="/">
+						<VBtn variant="plain" color="primary">Home</VBtn>
+					</RouterLink>
+
+					<RouterLink to="/about">
+						<VBtn variant="plain" color="primary">About</VBtn>
+					</RouterLink>
+				</VCol>
+
+				<VCol cols="12" lg="4">
+					<p class="text-light">
+						{{ web3Store.shortAccount }}@{{ web3Store.networkId }}
 					</p>
 				</VCol>
 			</VRow>

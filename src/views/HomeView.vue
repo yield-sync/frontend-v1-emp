@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<VContainer>
 
-	</div>
+	</VContainer>
 </template>
