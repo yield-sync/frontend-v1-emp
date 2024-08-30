@@ -10,23 +10,20 @@ interface Web3State {
 	error: string | null
 }
 
-interface Web3Getters {
-}
-
 interface Web3Actions {
 	connectWallet: () => Promise<void>
 	disconnectWallet: () => void
 }
 
 
-export const useWeb3Store = defineStore<"web3", Web3State, Web3Getters, Web3Actions>(
+export const useWeb3Store = defineStore<"web3", Web3State, {}, Web3Actions>(
 	"web3",
 	{
 		state: () =>
 		{
 			return {
 				web3: null,
-				account: null,
+				accounts: null,
 				networkId: null,
 				isConnected: false,
 				error: null,
@@ -69,7 +66,7 @@ export const useWeb3Store = defineStore<"web3", Web3State, Web3Getters, Web3Acti
 
 					}
 					// eslint-disable-next-line
-					catch (error: unknown)
+					catch (error: any)
 					{
 						// eslint-disable-next-line
 						if (error.code === 4001)
