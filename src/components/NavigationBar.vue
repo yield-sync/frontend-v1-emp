@@ -64,7 +64,7 @@
 
 					<VBtn
 						v-else
-						click="web3Store.disconnectWallet"
+						@click="web3Store.disconnectWallet"
 						color="white"
 						variant="tonal"
 						class="w-100 rounded-pill"

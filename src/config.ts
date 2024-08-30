@@ -1,25 +1,23 @@
-type NetworkChain = {
-	chainId: string,
-	chainName: string,
-	nativeCurrency: {
-		name: string,
-		symbol: string,
-		decimals: number,
-	},
-	rpcUrls: string[],
-	blockExplorerUrls: string[]
-	icon: any,
-	yieldSyncGovernance: string
-}
-
-
 import ethLogo from "./assets/eth.svg";
+import opLogo from "./assets/op.svg";
 
 
 const config: {
 	getChainName: any,
 	networkChain: {
-		[key: string]: NetworkChain
+		[key: string]: {
+			chainId: string,
+			chainName: string,
+			nativeCurrency: {
+				name: string,
+				symbol: string,
+				decimals: number,
+			},
+			rpcUrls: string[],
+			blockExplorerUrls: string[]
+			icon: any,
+			yieldSyncGovernance: string
+		}
 	},
 } = {
 	getChainName: (chainId: number) => {
@@ -91,7 +89,7 @@ const config: {
 			blockExplorerUrls: [
 				"https://etherscan.io",
 			],
-			icon: ethLogo,
+			icon: opLogo,
 			yieldSyncGovernance: "0x0000000000000000000000000000000000000000",
 
 		},
@@ -108,7 +106,6 @@ const config: {
 			rpcUrls: [
 			],
 			blockExplorerUrls: [
-				"",
 			],
 			icon: ethLogo,
 			yieldSyncGovernance: "",
