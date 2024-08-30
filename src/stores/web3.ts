@@ -4,14 +4,13 @@ import Web3 from "web3";
 
 interface Web3State {
 	web3: Web3 | null
-	account: string | null
+	accounts: string[] | null
 	networkId: bigint | null
 	isConnected: boolean
 	error: string | null
 }
 
 interface Web3Getters {
-	shortAccount: (state: Web3State) => string | null
 }
 
 interface Web3Actions {
@@ -35,11 +34,6 @@ export const useWeb3Store = defineStore<"web3", Web3State, Web3Getters, Web3Acti
 		},
 
 		getters: {
-			shortAccount: (state: Web3State): string | null =>
-			{
-				if (!state.account) return null;
-				return `${state.account.substring(0, 6)}...${state.account.substring(state.account.length - 4)}`;
-			},
 		},
 
 		actions: {
@@ -54,15 +48,15 @@ export const useWeb3Store = defineStore<"web3", Web3State, Web3Getters, Web3Acti
 						});
 
 						this.web3 = new Web3(window.ethereum);
-						this.account = accounts[0];
+						this.accounts = accounts;
 						this.networkId = await this.web3.eth.net.getId();
 						this.isConnected = true;
 						this.error = null;
 
 						window.ethereum.on("accountsChanged", (accounts: string[]) =>
 						{
-							this.account = accounts[0] || null;
-							if (!this.account) this.isConnected = false;
+							this.accounts = accounts || null;
+							if (!this.accounts) this.isConnected = false;
 						});
 
 						window.ethereum.on("chainChanged", async () =>
@@ -99,7 +93,7 @@ export const useWeb3Store = defineStore<"web3", Web3State, Web3Getters, Web3Acti
 			disconnectWallet()
 			{
 				this.web3 = null;
-				this.account = null;
+				this.accounts = null;
 				this.networkId = null;
 				this.isConnected = false;
 				this.error = null;

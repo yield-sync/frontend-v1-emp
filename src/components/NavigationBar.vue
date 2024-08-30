@@ -2,14 +2,65 @@
 	<VSheet color="transparent">
 		<VContainer>
 			<VRow>
-				<VCol cols="12" lg="8" />
+				<VCol
+					cols="12"
+					lg="4"
+				>
+					<RouterLink to="/" style="letter-spacing: 4px; text-decoration: none !important">
+						<h1
+							class="text-primary text-uppercase"
+							style="letter-spacing: 4px;"
+						>
+							Yield Sync
+						</h1>
+					</RouterLink>
+				</VCol>
 
-				<VCol cols="12" lg="4">
+				<VCol
+					cols="12"
+					lg="4"
+				>
+					<VBtn
+						variant="tonal"
+						color="white"
+						class="w-100 rounded-xl container1 elevation-0"
+					>
+						<!--
+						<img
+							src=""
+							alt="Description of Image"
+							class="mr-2"
+							style="max-width: 20px;"
+						/>
+						-->
+
+						<h5 class="mx-auto text-center text-light">
+							{{ "Chain Name Here" }}
+						</h5>
+
+						<VMenu activator="parent">
+							<VList class="mt-3 px-0 py-0 rounded-xl bg-light-frost elevation-0">
+								<VListItem v-for="(n, i) in []" :key="i">
+									<VListItemTitle
+										@click="null"
+									>
+										{{ n.chainName }}
+									</VListItemTitle>
+								</VListItem>
+							</VList>
+						</VMenu>
+					</VBtn>
+				</VCol>
+
+				<VCol
+					cols="12"
+					lg="4"
+				>
 					<VBtn
 						v-if="!web3Store.isConnected"
 						@click="web3Store.connectWallet"
+						color="dark"
 						variant="tonal"
-						color="white"
 						class="w-100 rounded-pill"
 					>
 						Connect Wallet
@@ -18,37 +69,56 @@
 					<VBtn
 						v-else
 						click="web3Store.disconnectWallet"
-						variant="tonal"
 						color="white"
+						variant="tonal"
 						class="w-100 rounded-pill"
 					>
-						Disconnect
+						Disconnect ⦁ {{ shortener(web3Store.accounts[0]) }}
 					</VBtn>
-
-					<p v-if="web3Store.error">{{ web3Store.error }}</p>
-				</VCol>
-			</VRow>
-
-			<VRow>
-				<VCol cols="12" lg="8">
-					<RouterLink to="/">
-						<VBtn variant="plain" color="primary">Home</VBtn>
-					</RouterLink>
-
-					<RouterLink to="/about">
-						<VBtn variant="plain" color="primary">About</VBtn>
-					</RouterLink>
 				</VCol>
 
-				<VCol cols="12" lg="4">
-					<p class="text-light">
-						{{ web3Store.shortAccount }}@{{ web3Store.networkId }}
-					</p>
+				<VCol
+					cols="12"
+					md="7"
+					lg="8"
+					xl="9"
+					class="text-left"
+				>
+					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
+						<VBtn
+							variant="plain"
+							color="primary"
+							class="rounded-xl"
+						>
+							<h3>V1 EMP</h3>
+						</VBtn>
+					</RouterLink>
+				</VCol>
+
+				<VCol
+					cols="12"
+					md="5"
+					lg="4"
+					xl="3"
+					class="text-right"
+				>
+					<VTextField
+						label="Insert Alchemy API Key Here"
+						variant="outlined"
+						hide-details
+					/>
+
+					<VTextField
+						label="Insert Alchemy Op API Key Here"
+						variant="outlined"
+						hide-details
+					/>
 				</VCol>
 			</VRow>
 		</VContainer>
 	</VSheet>
 </template>
+
 
 <script setup>
 	import { RouterLink } from "vue-router";
@@ -57,4 +127,12 @@
 
 
 	const web3Store = useWeb3Store();
+
+	const shortener = (subject) => subject ? subject.substring(0, 4) + "..." + subject.substring(subject.length - 4) : "";
 </script>
+
+<style lang="scss" scoped>
+.container1 {
+	display: flex;
+}
+</style>
