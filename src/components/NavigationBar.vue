@@ -25,25 +25,21 @@
 						color="white"
 						class="w-100 rounded-xl container1 elevation-0"
 					>
-						<!--
 						<img
-							src=""
+							:src="config.networkChain[config.getChainName(web3Store.networkId)].icon"
 							alt="Description of Image"
 							class="mr-2"
 							style="max-width: 20px;"
 						/>
-						-->
 
 						<h5 class="mx-auto text-center text-light">
-							{{ "Chain Name Here" }}
+							{{ config.getChainName(web3Store.networkId) }}
 						</h5>
 
 						<VMenu activator="parent">
 							<VList class="mt-3 px-0 py-0 rounded-xl bg-light-frost elevation-0">
-								<VListItem v-for="(n, i) in []" :key="i">
-									<VListItemTitle
-										@click="null"
-									>
+								<VListItem v-for="(n, i) in config.networkChain" :key="i">
+									<VListItemTitle @click="null">
 										{{ n.chainName }}
 									</VListItemTitle>
 								</VListItem>
@@ -123,6 +119,7 @@
 <script setup>
 	import { RouterLink } from "vue-router";
 
+	import config from "@/config";
 	import { useWeb3Store } from "@/stores/web3";
 
 

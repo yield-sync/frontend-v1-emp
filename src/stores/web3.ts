@@ -5,7 +5,7 @@ import Web3 from "web3";
 interface Web3State {
 	web3: Web3 | null
 	accounts: string[] | null
-	networkId: bigint | null
+	networkId: Number | null
 	isConnected: boolean
 	error: string | null
 }
@@ -49,7 +49,7 @@ export const useWeb3Store = defineStore<"web3", Web3State, Web3Getters, Web3Acti
 
 						this.web3 = new Web3(window.ethereum);
 						this.accounts = accounts;
-						this.networkId = await this.web3.eth.net.getId();
+						this.networkId = Number(await this.web3.eth.net.getId());
 						this.isConnected = true;
 						this.error = null;
 
@@ -63,7 +63,7 @@ export const useWeb3Store = defineStore<"web3", Web3State, Web3Getters, Web3Acti
 						{
 							if (this.web3)
 							{
-								this.networkId = await this.web3.eth.net.getId();
+								this.networkId = Number(await this.web3.eth.net.getId());
 							}
 						});
 
