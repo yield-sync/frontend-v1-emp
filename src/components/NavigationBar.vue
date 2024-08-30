@@ -103,12 +103,6 @@
 						variant="outlined"
 						hide-details
 					/>
-
-					<VTextField
-						label="Insert Alchemy Op API Key Here"
-						variant="outlined"
-						hide-details
-					/>
 				</VCol>
 			</VRow>
 		</VContainer>
