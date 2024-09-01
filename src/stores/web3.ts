@@ -5,7 +5,7 @@ import Web3 from "web3";
 interface Web3State {
 	web3: Web3 | null,
 	accounts: string[] | null,
-	networkId: Number | null,
+	networkId: number | null,
 	isConnected: boolean,
 	error: string | null,
 }

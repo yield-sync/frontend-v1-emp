@@ -21,24 +21,29 @@ const config: {
 		}
 	},
 } = {
-	getChainName: (chainId: number) => {
+	getChainName: (chainId: number) => 
+	{
 		switch (chainId)
 		{
-			case 1:
-				return "mainnet";
+		case 1:
+			return "mainnet";
 
-			case 11155111:
-				return "sepolia";
+		case 11155111:
+			return "sepolia";
 
-			case 420:
-				return "optimisticGoerli";
+		case 420:
+			return "optimisticGoerli";
 
-			default:
-				return "unknown";
+		default:
+			return "unknown";
 		}
 	},
 
-	networkChainKeys: ["mainnet", "sepolia", "optimisticGoerli"],
+	networkChainKeys: [
+		"mainnet",
+		"sepolia",
+		"optimisticGoerli",
+	],
 
 	networkChain: {
 		// Mainnet

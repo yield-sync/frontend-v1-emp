@@ -1,5 +1,3 @@
 <template>
-	<VContainer>
-
-	</VContainer>
+	<VContainer/>
 </template>

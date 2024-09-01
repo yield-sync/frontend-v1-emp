@@ -121,12 +121,15 @@
 
 	const shortener = (
 		subject: string | null
-	) => subject ? subject.substring(0, 4) + "..." + subject.substring(subject.length - 4) : "";
+	) => 
+	{
+		return subject ? subject.substring(0, 4) + "..." + subject.substring(subject.length - 4) : "";
+	};
 
 	const switchNetwork = async (networkChainKey: string) =>
 	{
 		web3Store.switchNetwork(config.networkChain[networkChainKey].chainId);
-	}
+	};
 </script>
 
 <style lang="scss" scoped>
