@@ -3,17 +3,17 @@ import Web3 from "web3";
 
 
 interface Web3State {
-	web3: Web3 | null
-	accounts: string[] | null
-	networkId: Number | null
-	isConnected: boolean
-	error: string | null
+	web3: Web3 | null,
+	accounts: string[] | null,
+	networkId: Number | null,
+	isConnected: boolean,
+	error: string | null,
 }
 
 interface Web3Actions {
-	connectWallet: () => Promise<void>
-	disconnectWallet: () => void
-	switchNetwork: (networkId: string) => Promise<void>
+	connectWallet: () => Promise<void>,
+	disconnectWallet: () => void,
+	switchNetwork: (networkId: string) => Promise<void>,
 }
 
 
