@@ -33,7 +33,7 @@
 						/>
 
 						<h5 class="mx-auto text-center text-light">
-							{{ config.getChainName(web3Store.networkId) }}
+							{{ config.getChainName(web3Store.networkId) }} ⦁ {{ web3Store.networkId }}
 						</h5>
 
 						<VMenu activator="parent">

@@ -101,7 +101,7 @@ export const useWeb3Store = defineStore<"web3", Web3State, {}, Web3Actions>(
 			{
 				try
 				{
-					if (!window.ethereum)
+					if (!window.ethereum || !this.web3)
 					{
 						this.error = "Network could not be changed";
 						return;
@@ -115,6 +115,8 @@ export const useWeb3Store = defineStore<"web3", Web3State, {}, Web3Actions>(
 							},
 						],
 					});
+
+					this.networkId = Number(await this.web3.eth.net.getId());
 				}
 				catch (error)
 				{
