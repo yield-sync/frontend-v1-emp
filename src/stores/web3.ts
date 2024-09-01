@@ -13,6 +13,7 @@ interface Web3State {
 interface Web3Actions {
 	connectWallet: () => Promise<void>
 	disconnectWallet: () => void
+	switchNetwork: (networkId: string) => Promise<void>
 }
 
 
@@ -95,6 +96,33 @@ export const useWeb3Store = defineStore<"web3", Web3State, {}, Web3Actions>(
 				this.isConnected = false;
 				this.error = null;
 			},
+
+			async switchNetwork(chainId: string)
+			{
+				try
+				{
+					if (!window.ethereum)
+					{
+						this.error = "Network could not be changed";
+						return;
+					}
+
+					await window.ethereum.request({
+						method: "wallet_switchEthereumChain",
+						params: [
+							{
+								chainId: chainId
+							},
+						],
+					});
+				}
+				catch (error)
+				{
+					this.error = String(error);
+
+					return;
+				}
+			}
 		},
 	}
 );

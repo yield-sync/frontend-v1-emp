@@ -38,8 +38,8 @@
 
 						<VMenu activator="parent">
 							<VList class="mt-3 px-0 py-0 rounded-xl bg-light-frost elevation-0">
-								<VListItem v-for="(n, i) in config.networkChain" :key="i">
-									<VListItemTitle @click="null">
+								<VListItem v-for="(n, key) in config.networkChain" :key="key">
+									<VListItemTitle @click="switchNetwork(String(key))">
 										{{ n.chainName }}
 									</VListItemTitle>
 								</VListItem>
@@ -69,7 +69,7 @@
 						variant="tonal"
 						class="w-100 rounded-pill"
 					>
-						Disconnect ⦁ {{ shortener(web3Store.accounts[0]) }}
+						Disconnect ⦁ {{ web3Store.accounts ? shortener(web3Store.accounts[0]) : "" }}
 					</VBtn>
 				</VCol>
 
@@ -110,7 +110,7 @@
 </template>
 
 
-<script setup>
+<script lang="ts" setup>
 	import { RouterLink } from "vue-router";
 
 	import config from "@/config";
@@ -119,7 +119,14 @@
 
 	const web3Store = useWeb3Store();
 
-	const shortener = (subject) => subject ? subject.substring(0, 4) + "..." + subject.substring(subject.length - 4) : "";
+	const shortener = (
+		subject: string | null
+	) => subject ? subject.substring(0, 4) + "..." + subject.substring(subject.length - 4) : "";
+
+	const switchNetwork = async (networkChainKey: string) =>
+	{
+		web3Store.switchNetwork(config.networkChain[networkChainKey].chainId);
+	}
 </script>
 
 <style lang="scss" scoped>

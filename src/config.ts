@@ -4,6 +4,7 @@ import opLogo from "./assets/op.svg";
 
 const config: {
 	getChainName: any,
+	networkChainKeys: string[],
 	networkChain: {
 		[key: string]: {
 			chainId: string,
@@ -36,6 +37,8 @@ const config: {
 				return "unknown";
 		}
 	},
+
+	networkChainKeys: ["mainnet", "sepolia", "optimisticGoerli"],
 
 	networkChain: {
 		// Mainnet
