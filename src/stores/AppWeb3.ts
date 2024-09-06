@@ -1,24 +1,35 @@
 import { defineStore } from "pinia";
 import Web3 from "web3";
+import { Contract } from "web3-eth-contract";
+import type { AbiItem } from "web3-utils";
+
+import YieldSyncGovernance from "@/abi/YieldSyncGovernance";
+import config from "@/config";
 
 
-interface Web3State {
+interface AppWeb3State
+{
 	web3: Web3 | null,
 	accounts: string[] | null,
 	networkId: number | null,
 	isConnected: boolean,
 	error: string | null,
+	contracts: {
+		yieldSyncGovernance: Contract<AbiItem[]> | null,
+	},
 }
 
-interface Web3Actions {
-	connectWallet: () => Promise<void>,
-	disconnectWallet: () => void,
-	switchNetwork: (networkId: string) => Promise<void>,
+interface AppWeb3Actions
+{
+	connectWallet(): Promise<void>,
+	disconnectWallet(): void,
+	switchNetwork(networkId: string): Promise<void>,
+	setYieldSyncGovernance(): void
 }
 
 
-export const useWeb3Store = defineStore<"web3", Web3State, {}, Web3Actions>(
-	"web3",
+export const useWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3Actions>(
+	"AppWeb3",
 	{
 		state: () =>
 		{
@@ -28,6 +39,9 @@ export const useWeb3Store = defineStore<"web3", Web3State, {}, Web3Actions>(
 				networkId: null,
 				isConnected: false,
 				error: null,
+				contracts: {
+					yieldSyncGovernance: null,
+				}
 			};
 		},
 
@@ -35,7 +49,7 @@ export const useWeb3Store = defineStore<"web3", Web3State, {}, Web3Actions>(
 		},
 
 		actions: {
-			async connectWallet()
+			async connectWallet(): Promise<void>
 			{
 				if (window.ethereum)
 				{
@@ -88,7 +102,7 @@ export const useWeb3Store = defineStore<"web3", Web3State, {}, Web3Actions>(
 				}
 			},
 
-			disconnectWallet()
+			disconnectWallet(): void
 			{
 				this.web3 = null;
 				this.accounts = null;
@@ -97,7 +111,7 @@ export const useWeb3Store = defineStore<"web3", Web3State, {}, Web3Actions>(
 				this.error = null;
 			},
 
-			async switchNetwork(chainId: string)
+			async switchNetwork(chainId: string): Promise<void>
 			{
 				try
 				{
@@ -124,7 +138,18 @@ export const useWeb3Store = defineStore<"web3", Web3State, {}, Web3Actions>(
 
 					return;
 				}
-			}
+			},
+
+			setYieldSyncGovernance(): void
+			{
+				if (this.web3)
+				{
+					this.contracts.yieldSyncGovernance = new this.web3.eth.Contract(
+						YieldSyncGovernance as AbiItem[],
+						config.networkChain[config.getChainName(this.networkId)].yieldSyncGovernance
+					)
+				}
+			},
 		},
 	}
 );

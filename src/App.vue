@@ -14,12 +14,12 @@
 
 	import FooterBar from "@/components/FooterBar.vue";
 	import NavigationBar from "@/components/NavigationBar.vue";
-	import { useWeb3Store } from "@/stores/web3";
+	import { useWeb3Store } from "@/stores/AppWeb3";
 
 
 	const web3Store = useWeb3Store();
 
-	onMounted(() => 
+	onMounted(() =>
 	{
 		console.log("Component mounted!");
 
