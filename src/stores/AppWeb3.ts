@@ -25,10 +25,11 @@ interface AppWeb3Actions
 	disconnectWallet(): void,
 	switchNetwork(networkId: string): Promise<void>,
 	setYieldSyncGovernance(): void
+	initializeAppWeb3(): Promise<void>
 }
 
 
-export const useWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3Actions>(
+export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3Actions>(
 	"AppWeb3",
 	{
 		state: () =>
@@ -144,12 +145,25 @@ export const useWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3Acti
 			{
 				if (this.web3)
 				{
+					console.log("Setting YieldSync Governance contract..");
+
 					this.contracts.yieldSyncGovernance = new this.web3.eth.Contract(
 						YieldSyncGovernance as AbiItem[],
 						config.networkChain[config.getChainName(this.networkId)].yieldSyncGovernance
 					)
 				}
+				else
+				{
+					console.log("Failed to set YieldSync Governance contract because web3 found..");
+				}
 			},
+
+			async initializeAppWeb3(): Promise<void>
+			{
+				await this.connectWallet();
+
+				await this.setYieldSyncGovernance();
+			}
 		},
 	}
 );

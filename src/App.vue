@@ -14,16 +14,14 @@
 
 	import FooterBar from "@/components/FooterBar.vue";
 	import NavigationBar from "@/components/NavigationBar.vue";
-	import { useWeb3Store } from "@/stores/AppWeb3";
+	import { useAppWeb3Store } from "@/stores/AppWeb3";
 
 
-	const web3Store = useWeb3Store();
+	const web3Store = useAppWeb3Store();
 
-	onMounted(() =>
+	onMounted(async () =>
 	{
-		console.log("Component mounted!");
-
-		web3Store.connectWallet();
+		await web3Store.initializeAppWeb3();
 	});
 </script>
 

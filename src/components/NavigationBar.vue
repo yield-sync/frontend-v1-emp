@@ -114,10 +114,10 @@
 	import { RouterLink } from "vue-router";
 
 	import config from "@/config";
-	import { useWeb3Store } from "@/stores/AppWeb3";
+	import { useAppWeb3Store } from "@/stores/AppWeb3";
 
 
-	const web3Store = useWeb3Store();
+	const web3Store = useAppWeb3Store();
 
 	const shortener = (
 		subject: string | null
