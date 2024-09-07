@@ -75,27 +75,43 @@
 
 				<VCol
 					cols="12"
-					md="7"
-					lg="8"
-					xl="9"
+					md="4"
+					lg="4"
+					xl="4"
 					class="text-left"
 				>
-					<RouterLink to="/" class="mr-2 text-decoration-none text-dark">
+					<RouterLink
+						v-for="(v, i) in router.options.routes"
+						:to="v.path"
+						class="mr-2 text-decoration-none text-dark"
+					>
 						<VBtn
 							variant="plain"
 							color="primary"
 							class="rounded-xl"
 						>
-							<h3>V1 EMP</h3>
+							{{ v.name }}
 						</VBtn>
 					</RouterLink>
 				</VCol>
 
 				<VCol
 					cols="12"
-					md="5"
+					md="4"
 					lg="4"
-					xl="3"
+					xl="4"
+					class="text-left"
+				>
+					<h4 class="text-center text-danger">
+						{{ appWeb3Store.error }}
+					</h4>
+				</VCol>
+
+				<VCol
+					cols="12"
+					md="4"
+					lg="4"
+					xl="4"
 					class="text-right"
 				>
 					<VTextField
@@ -111,13 +127,14 @@
 
 
 <script lang="ts" setup>
-	import { RouterLink } from "vue-router";
+	import { useRouter, RouterLink } from "vue-router";
 
 	import config from "@/config";
 	import { useAppWeb3Store } from "@/stores/AppWeb3";
 
 
 	const appWeb3Store = useAppWeb3Store();
+    const router = useRouter();
 
 	const shortener = (
 		subject: string | null

@@ -1,7 +1,7 @@
 <template>
 	<MainContainer title="YS Govnernance">
 		<h4>Governance Address:</h4>
-		<h5>{{ getAddress() }}</h5>
+		<h5>{{ governance }}</h5>
 		<br>
 		<h4>Default Admin Role:</h4>
 		<h5>{{ defaultAdminRole }}</h5>
@@ -15,20 +15,21 @@
 	import { useAppWeb3Store } from "@/stores/AppWeb3";
 
 
-	const defaultAdminRole = ref("?");
 	const appWeb3Store = useAppWeb3Store();
 
-	const getAddress = () =>
+	const governance = ref("?");
+	const defaultAdminRole = ref("?");
+
+
+	const getGovernance = () =>
 	{
-		return appWeb3Store.contracts.yieldSyncGovernance ?
-			appWeb3Store.contracts.yieldSyncGovernance.options.address ?
-				appWeb3Store.contracts.yieldSyncGovernance.options.address
-			:
-				"?"
+		return appWeb3Store.contracts.yieldSyncGovernance.options.address ?
+			appWeb3Store.contracts.yieldSyncGovernance.options.address
 		:
-			"Contract not set.."
+			"?"
 		;
 	}
+
 
 	const getDefaultAdminRole = () =>
 	{
@@ -41,11 +42,13 @@
 		}
 	};
 
+
 	watch(
 		() => appWeb3Store.contracts.yieldSyncGovernance,
 		async (newValue) => {
 			if (newValue)
 			{
+				governance.value = await getGovernance();
 				defaultAdminRole.value = await getDefaultAdminRole();
 			}
 		},

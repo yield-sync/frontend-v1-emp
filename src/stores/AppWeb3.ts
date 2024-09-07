@@ -23,10 +23,14 @@ interface AppWeb3Actions
 {
 	connectWallet(): Promise<void>,
 	disconnectWallet(): void,
-	switchNetwork(networkId: string): Promise<void>,
-	setYieldSyncGovernance(): void
 	initialize(): Promise<void>
+	setYieldSyncGovernance(): void
+	setWalletValues(): Promise<void>,
+	switchNetwork(networkId: string): Promise<void>,
 }
+
+
+const NO_WINDOW_ETHEREUM_ERROR: string = "No Ethereum provider found, please install a wallet";
 
 
 export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3Actions>(
@@ -50,61 +54,10 @@ export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3A
 		},
 
 		actions: {
-			async connectWallet(): Promise<void>
-			{
-				if (window.ethereum)
-				{
-					try
-					{
-						const accounts = await window.ethereum.request({
-							method: "eth_requestAccounts"
-						});
-
-						this.web3 = new Web3(window.ethereum);
-						this.accounts = accounts;
-						this.networkId = Number(await this.web3.eth.net.getId());
-						this.isConnected = true;
-						this.error = null;
-
-						window.ethereum.on("accountsChanged", (accounts: string[]) =>
-						{
-							this.accounts = accounts || null;
-							if (!this.accounts) this.isConnected = false;
-						});
-
-						window.ethereum.on("chainChanged", async () =>
-						{
-							if (this.web3)
-							{
-								this.networkId = Number(await this.web3.eth.net.getId());
-							}
-						});
-
-					}
-					// eslint-disable-next-line
-					catch (error: any)
-					{
-						// eslint-disable-next-line
-						if (error.code === 4001)
-						{
-							this.error = "User denied account access.";
-						}
-						else
-						{
-							console.error("Unexpected error:", error);
-							this.error = "Unexpected error occurred during wallet connection. Please try again.";
-						}
-					}
-				}
-				else
-				{
-					console.error("No Ethereum provider found. Install MetaMask.");
-					this.error = "No Ethereum provider found. Install MetaMask.";
-				}
-			},
-
 			disconnectWallet(): void
 			{
+				localStorage.removeItem("walletAddress");
+
 				this.web3 = null;
 				this.accounts = null;
 				this.networkId = null;
@@ -112,13 +65,98 @@ export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3A
 				this.error = null;
 			},
 
+			async setWalletValues(): Promise<void>
+			{
+				if (!window.ethereum)
+				{
+					this.error = NO_WINDOW_ETHEREUM_ERROR;
+
+					return;
+				}
+
+				try
+				{
+					this.web3 = new Web3(window.ethereum);
+					this.accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+					this.networkId = Number(await this.web3.eth.net.getId());
+					this.isConnected = true;
+					this.error = null;
+				}
+				catch (error: any)
+				{
+					if (error.code === 4001)
+					{
+						this.error = "User denied account access.";
+
+						return;
+					}
+
+					this.error = String(error);
+				}
+			},
+
+			async connectWallet(): Promise<void>
+			{
+				if (!window.ethereum)
+				{
+					this.error = NO_WINDOW_ETHEREUM_ERROR;
+
+					return;
+				}
+
+				try
+				{
+					await this.setWalletValues();
+
+					window.ethereum.on("accountsChanged", (accounts: string[]) =>
+					{
+						if (!accounts)
+						{
+							this.disconnectWallet();
+
+							return;
+						}
+
+						this.accounts = accounts;
+					});
+
+					window.ethereum.on("chainChanged", async () =>
+					{
+						if (this.web3)
+						{
+							await this.setWalletValues();
+						}
+					});
+
+				}
+				catch (error: any)
+				{
+					if (error.code === 4001)
+					{
+						this.error = "User denied account access.";
+
+						return;
+					}
+
+					this.error = String(error);
+				}
+			},
+
 			async switchNetwork(chainId: string): Promise<void>
 			{
 				try
 				{
-					if (!window.ethereum || !this.web3)
+					if (!window.ethereum)
 					{
-						this.error = "Network could not be changed";
+						this.error = NO_WINDOW_ETHEREUM_ERROR;
+
+						return;
+					}
+
+					if (!this.web3)
+					{
+						this.error = "No web3 found";
+
 						return;
 					}
 
@@ -131,7 +169,9 @@ export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3A
 						],
 					});
 
-					this.networkId = Number(await this.web3.eth.net.getId());
+					await this.setWalletValues();
+
+					await this.setYieldSyncGovernance();
 				}
 				catch (error)
 				{
@@ -143,20 +183,17 @@ export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3A
 
 			setYieldSyncGovernance(): void
 			{
-				if (this.web3)
+				if (!this.web3)
 				{
-					console.log("Setting YieldSync Governance contract..");
-					console.log(config.networkChain[config.getChainName(this.networkId)].yieldSyncGovernance);
+					this.error = "Failed to set YS Gov because no web3 found";
 
-					this.contracts.yieldSyncGovernance = new this.web3.eth.Contract(
-						YieldSyncGovernance as AbiItem[],
-						config.networkChain[config.getChainName(this.networkId)].yieldSyncGovernance
-					)
+					return;
 				}
-				else
-				{
-					console.log("Failed to set YieldSync Governance contract because web3 found..");
-				}
+
+				this.contracts.yieldSyncGovernance = new this.web3.eth.Contract(
+					YieldSyncGovernance as AbiItem[],
+					config.networkChain[config.getChainName(this.networkId)].yieldSyncGovernance
+				)
 			},
 
 			async initialize(): Promise<void>
