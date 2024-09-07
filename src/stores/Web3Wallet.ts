@@ -1,30 +1,22 @@
 import { defineStore } from "pinia";
 import Web3 from "web3";
-import { Contract } from "web3-eth-contract";
-import type { AbiItem } from "web3-utils";
-
-import YieldSyncGovernance from "@/abi/YieldSyncGovernance";
-import config from "@/config";
 
 
-interface AppWeb3State
+interface State
 {
+	walletConnected: boolean,
 	web3: Web3 | null,
 	accounts: string[] | null,
 	networkId: number | null,
-	isConnected: boolean,
 	error: string | null,
-	contracts: {
-		yieldSyncGovernance: Contract<AbiItem[]> | null,
-	},
 }
 
-interface AppWeb3Actions
+
+interface Actions
 {
 	connectWallet(): Promise<void>,
 	disconnectWallet(): void,
 	initialize(): Promise<void>
-	setYieldSyncGovernance(): void
 	setWalletValues(): Promise<void>,
 	switchNetwork(networkId: string): Promise<void>,
 }
@@ -33,24 +25,18 @@ interface AppWeb3Actions
 const NO_WINDOW_ETHEREUM_ERROR: string = "No Ethereum provider found, please install a wallet";
 
 
-export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3Actions>(
-	"AppWeb3",
+export const useWeb3WalletStore = defineStore<"Web3Wallet", State, {}, Actions>(
+	"Web3Wallet",
 	{
 		state: () =>
 		{
 			return {
+				walletConnected: false,
 				web3: null,
 				accounts: null,
 				networkId: null,
-				isConnected: false,
 				error: null,
-				contracts: {
-					yieldSyncGovernance: null,
-				}
 			};
-		},
-
-		getters: {
 		},
 
 		actions: {
@@ -58,10 +44,10 @@ export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3A
 			{
 				localStorage.removeItem("walletAddress");
 
+				this.walletConnected = false;
 				this.web3 = null;
 				this.accounts = null;
 				this.networkId = null;
-				this.isConnected = false;
 				this.error = null;
 			},
 
@@ -78,10 +64,10 @@ export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3A
 				{
 					this.web3 = new Web3(window.ethereum);
 					this.accounts = await window.ethereum.request({
-						method: "eth_requestAccounts" 
+						method: "eth_requestAccounts"
 					});
 					this.networkId = Number(await this.web3.eth.net.getId());
-					this.isConnected = true;
+					this.walletConnected = true;
 					this.error = null;
 				}
 				catch (error: any)
@@ -172,8 +158,6 @@ export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3A
 					});
 
 					await this.setWalletValues();
-
-					await this.setYieldSyncGovernance();
 				}
 				catch (error)
 				{
@@ -183,26 +167,9 @@ export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3A
 				}
 			},
 
-			setYieldSyncGovernance(): void
-			{
-				if (!this.web3)
-				{
-					this.error = "Failed to set YS Gov because no web3 found";
-
-					return;
-				}
-
-				this.contracts.yieldSyncGovernance = new this.web3.eth.Contract(
-					YieldSyncGovernance as AbiItem[],
-					config.networkChain[config.getChainName(this.networkId)].yieldSyncGovernance
-				);
-			},
-
 			async initialize(): Promise<void>
 			{
 				await this.connectWallet();
-
-				await this.setYieldSyncGovernance();
 			}
 		},
 	}

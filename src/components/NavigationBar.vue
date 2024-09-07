@@ -26,14 +26,14 @@
 						class="w-100 rounded-xl container1 elevation-0"
 					>
 						<img
-							:src="config.networkChain[config.getChainName(appWeb3Store.networkId)].icon"
+							:src="config.networkChain[config.getChainName(web3Wallet.networkId)].icon"
 							alt="Description of Image"
 							class="mr-2"
 							style="max-width: 20px;"
 						/>
 
 						<h5 class="mx-auto text-center text-light">
-							{{ config.getChainName(appWeb3Store.networkId) }} ⦁ {{ appWeb3Store.networkId }}
+							{{ config.getChainName(web3Wallet.networkId) }} ⦁ {{ web3Wallet.networkId }}
 						</h5>
 
 						<VMenu activator="parent">
@@ -53,8 +53,8 @@
 					lg="4"
 				>
 					<VBtn
-						v-if="!appWeb3Store.isConnected"
-						@click="appWeb3Store.connectWallet"
+						v-if="!web3Wallet.walletConnected"
+						@click="web3Wallet.connectWallet"
 						color="dark"
 						variant="tonal"
 						class="w-100 rounded-pill"
@@ -64,12 +64,12 @@
 
 					<VBtn
 						v-else
-						@click="appWeb3Store.disconnectWallet"
+						@click="web3Wallet.disconnectWallet"
 						color="white"
 						variant="tonal"
 						class="w-100 rounded-pill"
 					>
-						Disconnect ⦁ {{ appWeb3Store.accounts ? shortener(appWeb3Store.accounts[0]) : "" }}
+						Disconnect ⦁ {{ web3Wallet.accounts ? shortener(web3Wallet.accounts[0]) : "" }}
 					</VBtn>
 				</VCol>
 
@@ -103,7 +103,7 @@
 					class="text-left"
 				>
 					<h4 class="text-center text-danger">
-						{{ appWeb3Store.error }}
+						{{ web3Wallet.error }}
 					</h4>
 				</VCol>
 
@@ -130,10 +130,10 @@
 	import { useRouter, RouterLink } from "vue-router";
 
 	import config from "@/config";
-	import { useAppWeb3Store } from "@/stores/AppWeb3";
+	import { useWeb3WalletStore } from "@/stores/Web3Wallet";
 
 
-	const appWeb3Store = useAppWeb3Store();
+	const web3Wallet = useWeb3WalletStore();
 	const router = useRouter();
 
 	const shortener = (
@@ -145,7 +145,7 @@
 
 	const switchNetwork = async (networkChainKey: string) =>
 	{
-		appWeb3Store.switchNetwork(config.networkChain[networkChainKey].chainId);
+		web3Wallet.switchNetwork(config.networkChain[networkChainKey].chainId);
 	};
 </script>
 

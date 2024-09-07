@@ -20,10 +20,10 @@
 	import { ref, watch } from "vue";
 
 	import MainContainer from "@/components/MainContainer.vue";
-	import { useAppWeb3Store } from "@/stores/AppWeb3";
+	import { useYSContractsStore } from "@/stores/YSContracts";
 
 
-	const appWeb3Store = useAppWeb3Store();
+	const ySContracts = useYSContractsStore();
 
 	const governance = ref("?");
 	const payTo = ref("?");
@@ -32,19 +32,15 @@
 
 	const getGovernance = () =>
 	{
-		return appWeb3Store.contracts.yieldSyncGovernance.options.address ?
-			appWeb3Store.contracts.yieldSyncGovernance.options.address
-			:
-			"?"
-		;
+		return ySContracts.yieldSyncGovernance.options.address ? ySContracts.yieldSyncGovernance.options.address : "?";
 	};
 
 
 	const getPayTo = () =>
 	{
-		if (appWeb3Store.contracts.yieldSyncGovernance)
+		if (ySContracts.yieldSyncGovernance)
 		{
-			return appWeb3Store.contracts.yieldSyncGovernance.methods.payTo().call().then((result) =>
+			return ySContracts.yieldSyncGovernance.methods.payTo().call().then((result) =>
 			{
 				return result;
 			}).catch((error) =>
@@ -57,9 +53,9 @@
 
 	const getDefaultAdminRole = () =>
 	{
-		if (appWeb3Store.contracts.yieldSyncGovernance)
+		if (ySContracts.yieldSyncGovernance)
 		{
-			return appWeb3Store.contracts.yieldSyncGovernance.methods.DEFAULT_ADMIN_ROLE().call().then((result) =>
+			return ySContracts.yieldSyncGovernance.methods.DEFAULT_ADMIN_ROLE().call().then((result) =>
 			{
 				return result;
 			}).catch((error) =>
@@ -73,11 +69,11 @@
 	watch(
 		() =>
 		{
-			return appWeb3Store.contracts.yieldSyncGovernance;
+			return ySContracts.yieldSyncGovernance;
 		},
-		async (newValue) =>
+		async (newYieldSyncGovernance) =>
 		{
-			if (newValue)
+			if (newYieldSyncGovernance)
 			{
 				governance.value = await getGovernance();
 				payTo.value = await getPayTo();
