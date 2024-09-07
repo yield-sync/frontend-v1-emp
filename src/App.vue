@@ -17,11 +17,11 @@
 	import { useAppWeb3Store } from "@/stores/AppWeb3";
 
 
-	const web3Store = useAppWeb3Store();
+	const appWeb3Store = useAppWeb3Store();
 
 	onMounted(async () =>
 	{
-		await web3Store.initializeAppWeb3();
+		await appWeb3Store.initialize();
 	});
 </script>
 

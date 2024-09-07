@@ -26,14 +26,14 @@
 						class="w-100 rounded-xl container1 elevation-0"
 					>
 						<img
-							:src="config.networkChain[config.getChainName(web3Store.networkId)].icon"
+							:src="config.networkChain[config.getChainName(appWeb3Store.networkId)].icon"
 							alt="Description of Image"
 							class="mr-2"
 							style="max-width: 20px;"
 						/>
 
 						<h5 class="mx-auto text-center text-light">
-							{{ config.getChainName(web3Store.networkId) }} ⦁ {{ web3Store.networkId }}
+							{{ config.getChainName(appWeb3Store.networkId) }} ⦁ {{ appWeb3Store.networkId }}
 						</h5>
 
 						<VMenu activator="parent">
@@ -53,8 +53,8 @@
 					lg="4"
 				>
 					<VBtn
-						v-if="!web3Store.isConnected"
-						@click="web3Store.connectWallet"
+						v-if="!appWeb3Store.isConnected"
+						@click="appWeb3Store.connectWallet"
 						color="dark"
 						variant="tonal"
 						class="w-100 rounded-pill"
@@ -64,12 +64,12 @@
 
 					<VBtn
 						v-else
-						@click="web3Store.disconnectWallet"
+						@click="appWeb3Store.disconnectWallet"
 						color="white"
 						variant="tonal"
 						class="w-100 rounded-pill"
 					>
-						Disconnect ⦁ {{ web3Store.accounts ? shortener(web3Store.accounts[0]) : "" }}
+						Disconnect ⦁ {{ appWeb3Store.accounts ? shortener(appWeb3Store.accounts[0]) : "" }}
 					</VBtn>
 				</VCol>
 
@@ -117,7 +117,7 @@
 	import { useAppWeb3Store } from "@/stores/AppWeb3";
 
 
-	const web3Store = useAppWeb3Store();
+	const appWeb3Store = useAppWeb3Store();
 
 	const shortener = (
 		subject: string | null
@@ -128,7 +128,7 @@
 
 	const switchNetwork = async (networkChainKey: string) =>
 	{
-		web3Store.switchNetwork(config.networkChain[networkChainKey].chainId);
+		appWeb3Store.switchNetwork(config.networkChain[networkChainKey].chainId);
 	};
 </script>
 

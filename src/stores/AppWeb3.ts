@@ -25,7 +25,7 @@ interface AppWeb3Actions
 	disconnectWallet(): void,
 	switchNetwork(networkId: string): Promise<void>,
 	setYieldSyncGovernance(): void
-	initializeAppWeb3(): Promise<void>
+	initialize(): Promise<void>
 }
 
 
@@ -146,6 +146,7 @@ export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3A
 				if (this.web3)
 				{
 					console.log("Setting YieldSync Governance contract..");
+					console.log(config.networkChain[config.getChainName(this.networkId)].yieldSyncGovernance);
 
 					this.contracts.yieldSyncGovernance = new this.web3.eth.Contract(
 						YieldSyncGovernance as AbiItem[],
@@ -158,7 +159,7 @@ export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3A
 				}
 			},
 
-			async initializeAppWeb3(): Promise<void>
+			async initialize(): Promise<void>
 			{
 				await this.connectWallet();
 

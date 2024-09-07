@@ -4,12 +4,8 @@
 			<VContainer>
 				<VRow>
 					<VCol cols="12" lg="4">
-						<RouterLink to="/">
-							<VBtn variant="plain" color="primary" class="w-100">Home</VBtn>
-						</RouterLink>
-
-						<RouterLink to="/about">
-							<VBtn variant="plain" color="primary" class="w-100">About</VBtn>
+						<RouterLink v-for="(v, i) in router.options.routes" :to="v.path">
+							<VBtn variant="plain" color="primary" class="w-100">{{ v.name }}</VBtn>
 						</RouterLink>
 					</VCol>
 				</VRow>
@@ -19,5 +15,8 @@
 </template>
 
 <script setup>
-	import { RouterLink } from "vue-router";
+	import { useRouter, RouterLink } from "vue-router";
+
+	// Get the router instance
+    const router = useRouter();
 </script>
