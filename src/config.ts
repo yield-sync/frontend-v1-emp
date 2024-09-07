@@ -21,7 +21,7 @@ const config: {
 		}
 	},
 } = {
-	getChainName: (chainId: number) => 
+	getChainName: (chainId: number) =>
 	{
 		switch (chainId)
 		{
@@ -79,7 +79,7 @@ const config: {
 				"https://etherscan.io",
 			],
 			icon: ethLogo,
-			yieldSyncGovernance: "0x2dbd8bA2F7C400f15d8779F4bB234f0CD60e4617",
+			yieldSyncGovernance: "0x86BD4296Ba41375504bfFa2cd4C1Eedec9b09fA4",
 
 		},
 

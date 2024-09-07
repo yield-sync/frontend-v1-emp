@@ -1,7 +1,6 @@
 export default [
 	{
 		"inputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
@@ -83,7 +82,6 @@ export default [
 	},
 	{
 		"inputs": [
-
 		],
 		"name": "DEFAULT_ADMIN_ROLE",
 		"outputs": [
@@ -173,7 +171,6 @@ export default [
 		],
 		"name": "grantRole",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -204,6 +201,34 @@ export default [
 	},
 	{
 		"inputs": [
+		],
+		"name": "payTo",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_payTo",
+				"type": "address"
+			},
+		],
+		"name": "payToUpdate",
+		"outputs": [
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
 				"internalType": "bytes32",
 				"name": "role",
@@ -217,7 +242,6 @@ export default [
 		],
 		"name": "renounceRole",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -237,7 +261,6 @@ export default [
 		],
 		"name": "revokeRole",
 		"outputs": [
-
 		],
 		"stateMutability": "nonpayable",
 		"type": "function"

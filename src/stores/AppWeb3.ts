@@ -77,7 +77,9 @@ export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3A
 				try
 				{
 					this.web3 = new Web3(window.ethereum);
-					this.accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+					this.accounts = await window.ethereum.request({
+						method: "eth_requestAccounts" 
+					});
 					this.networkId = Number(await this.web3.eth.net.getId());
 					this.isConnected = true;
 					this.error = null;
@@ -193,7 +195,7 @@ export const useAppWeb3Store = defineStore<"AppWeb3", AppWeb3State, {}, AppWeb3A
 				this.contracts.yieldSyncGovernance = new this.web3.eth.Contract(
 					YieldSyncGovernance as AbiItem[],
 					config.networkChain[config.getChainName(this.networkId)].yieldSyncGovernance
-				)
+				);
 			},
 
 			async initialize(): Promise<void>

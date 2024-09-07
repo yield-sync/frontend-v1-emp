@@ -134,7 +134,7 @@
 
 
 	const appWeb3Store = useAppWeb3Store();
-    const router = useRouter();
+	const router = useRouter();
 
 	const shortener = (
 		subject: string | null

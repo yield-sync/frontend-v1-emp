@@ -18,5 +18,5 @@
 	import { useRouter, RouterLink } from "vue-router";
 
 	// Get the router instance
-    const router = useRouter();
+	const router = useRouter();
 </script>

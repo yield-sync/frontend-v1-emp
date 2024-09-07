@@ -1,5 +1,5 @@
 <template>
-	<EMPs />
+	<EMPs/>
 </template>
 
 <script setup>

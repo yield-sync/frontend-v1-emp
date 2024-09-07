@@ -1,5 +1,5 @@
 <template>
-	<GovnernanceOverview />
+	<GovnernanceOverview/>
 </template>
 
 <script setup>

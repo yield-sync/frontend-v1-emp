@@ -1,7 +1,5 @@
 <template>
-	<MainContainer title="EMPs">
-
-	</MainContainer>
+	<MainContainer title="EMPs"/>
 </template>
 
 <script setup>
