@@ -11,7 +11,7 @@
 							class="text-primary text-uppercase"
 							style="letter-spacing: 4px;"
 						>
-							Yield Sync
+							Yield Sync - V1 EMP
 						</h1>
 					</RouterLink>
 				</VCol>
