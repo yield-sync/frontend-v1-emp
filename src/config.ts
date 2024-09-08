@@ -1,10 +1,10 @@
 import ethLogo from "./assets/eth.svg";
+import baseLogo from "./assets/base.svg";
 import opLogo from "./assets/op.svg";
 
 
 const config: {
 	getChainName: any,
-	networkChainKeys: string[],
 	networkChain: {
 		[key: string]: {
 			chainId: string,
@@ -31,6 +31,9 @@ const config: {
 		case 11155111:
 			return "sepolia";
 
+		case 84532:
+			return "base-sepolia";
+
 		case 420:
 			return "optimisticGoerli";
 
@@ -38,12 +41,6 @@ const config: {
 			return "unknown";
 		}
 	},
-
-	networkChainKeys: [
-		"mainnet",
-		"sepolia",
-		"optimisticGoerli",
-	],
 
 	networkChain: {
 		// Mainnet
@@ -80,6 +77,25 @@ const config: {
 			],
 			icon: ethLogo,
 			yieldSyncGovernance: "0x86BD4296Ba41375504bfFa2cd4C1Eedec9b09fA4",
+
+		},
+
+		// base sepolia
+		"base-sepolia": {
+			chainId: "0x14a34",
+			chainName: "Base Sepolia",
+			nativeCurrency: {
+				name: "ETH",
+				symbol: "ETH",
+				decimals: 18
+			},
+			rpcUrls: [
+			],
+			blockExplorerUrls: [
+				"	https://sepolia-explorer.base.org",
+			],
+			icon: baseLogo,
+			yieldSyncGovernance: "0x9a26BDc0F40Ca662816d0b05072FA38b34a4c489",
 
 		},
 
