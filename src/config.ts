@@ -92,7 +92,6 @@ const config: {
 			],
 			icon: baseLogo,
 			yieldSyncGovernance: "0x9a26BDc0F40Ca662816d0b05072FA38b34a4c489",
-
 		},
 	},
 };
