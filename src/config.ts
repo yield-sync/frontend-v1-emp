@@ -1,6 +1,5 @@
 import ethLogo from "./assets/eth.svg";
 import baseLogo from "./assets/base.svg";
-import opLogo from "./assets/op.svg";
 
 
 const config: {
@@ -34,11 +33,8 @@ const config: {
 			case 84532:
 				return "base-sepolia";
 
-			case 420:
-				return "optimisticGoerli";
-
 			default:
-				return "unknown";
+				return "mainnet";
 		}
 	},
 
@@ -98,42 +94,6 @@ const config: {
 			yieldSyncGovernance: "0x9a26BDc0F40Ca662816d0b05072FA38b34a4c489",
 
 		},
-
-		// Optimistic Goerli
-		optimisticGoerli: {
-			chainId: "0x1A4",
-			chainName: "Optimistic Görli",
-			nativeCurrency: {
-				name: "GOR",
-				symbol: "GOR",
-				decimals: 18
-			},
-			rpcUrls: [
-			],
-			blockExplorerUrls: [
-				"https://etherscan.io",
-			],
-			icon: opLogo,
-			yieldSyncGovernance: "0x0000000000000000000000000000000000000000",
-
-		},
-
-		// Unknown
-		unknown: {
-			chainId: "",
-			chainName: "Unknown",
-			nativeCurrency: {
-				name: "",
-				symbol: "",
-				decimals: 18
-			},
-			rpcUrls: [
-			],
-			blockExplorerUrls: [
-			],
-			icon: ethLogo,
-			yieldSyncGovernance: "",
-		}
 	},
 };
 

@@ -37,10 +37,15 @@
 						</h5>
 
 						<VMenu activator="parent">
-							<VList class="mt-3 px-0 py-0 rounded-xl bg-light-frost elevation-0">
-								<VListItem v-for="(n, key) in config.networkChain" :key="key">
+							<VList class="mt-3 px-0 py-0 rounded-xl bg-dark elevation-0">
+								<VListItem v-for="(n, key) in config.networkChain" :key="key" class="network-option">
 									<VListItemTitle @click="switchNetwork(String(key))">
-										{{ n.chainName }}
+										<VRow>
+											<VCol cols="1">
+												<img :src="n.icon" style="max-width: 20px;" />
+											</VCol>
+											<VCol>{{ n.chainName }}</VCol>
+										</VRow>
 									</VListItemTitle>
 								</VListItem>
 							</VList>
@@ -150,7 +155,17 @@
 </script>
 
 <style lang="scss" scoped>
-.container1 {
-	display: flex;
-}
+	@import "@/assets/styles/variables.scss";
+
+	.container1 {
+		display: flex;
+	}
+
+	.network-option {
+		cursor: pointer;
+
+		&:hover {
+			@extend .bg-gradient;
+		}
+	}
 </style>
